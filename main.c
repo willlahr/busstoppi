@@ -16,17 +16,20 @@ int main(int argc, char **argv) {
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
     
-	uint8_t mosi[10] = { 0x60, 0x00 };
-	uint8_t miso[10] = { 0 };
+	uint8_t mosi[19]; // one LED line long
+    
+	uint8_t miso[19];
     int n=0;
     while(1)
     {
-        
-        mosi[0]=n;
-        mosi[1]=n+1;
-        printf("RX from SPI: %04x\n", miso[1] + (miso[0] << 8));
-        n+=2;
-        bcm2835_spi_transfernb(mosi, miso, 2);
+        for(int a =0); a<19; a++)
+        {
+            mosi[a] = a+(19*n);
+        }
+        n++;
+       
+        printf("SPI data sent\n");
+        bcm2835_spi_transfernb(mosi, miso, 19 ); // one LED line is
     }
     
     bcm2835_spi_end();
