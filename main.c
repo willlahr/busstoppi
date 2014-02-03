@@ -174,3 +174,18 @@ int SpiWriteAndRead (int spi_device, unsigned char *data, int length)
 	return retVal;
 }
 
+void main() {
+    
+    unsigned char datablock[128];
+    for(int i =0; i<128; i++)
+    {
+        datablock[i]=i;
+        
+    }
+    
+    SpiOpenPort(0);
+    SpiWriteAndRead(0, datablock, 128);
+    
+    
+}
+
