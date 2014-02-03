@@ -19,9 +19,15 @@ int main(int argc, char **argv) {
 	uint8_t mosi[10] = { 0x60, 0x00 };
 	uint8_t miso[10] = { 0 };
 	bcm2835_spi_transfernb(mosi, miso, 2);
-    
-	printf("Level level from SPI: %04x\n", miso[1] + ((miso[0] & 3) << 8));
-    
+    int n=0;
+    while(1)
+    {
+        
+        mosi[0]=n;
+        mosi[1]=n+1;
+        printf("RX from SPI: %04x\n", miso[1] + (miso[0] << 8));
+        n+=2;
+    }
 	bcm2835_spi_end();
 	bcm2835_close();
 	return 0;
