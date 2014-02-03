@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     while(1)
     {
         int a;
-        for(a =0); a<19; a++)
+        for(a =0; a<19; a++)
         {
             mosi[a] = a+(19*n);
         }
