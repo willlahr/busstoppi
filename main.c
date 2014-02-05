@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
                     // delay
                     bcm2835_delayMicroseconds(100);
                     // turn line off
-                    bcm2835_gpio_clear(pins[line]);
+                    bcm2835_gpio_clr(pins[line]);
                     
                 }
             }
