@@ -23,12 +23,13 @@ int main(int argc, char **argv) {
 	uint8_t miso[19];
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
-    
+    int count = 0;
    
     
     while(1)
     {
-        for(column=0;column<COLUMN_MAX;column++;)
+        for(count = 0; count < 100; count++)
+        for(column=0;column<COLUMN_MAX;column++)
         {
             
             int a;
@@ -47,7 +48,6 @@ int main(int argc, char **argv) {
             }
             n++;
             
-            printf("SPI data sent\n");
             bcm2835_spi_transfernb(mosi, miso, 19 ); // one LED line is
         }
     }
