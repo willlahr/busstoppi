@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
                         outbuff[row][buffer_byte]=0x00;
                     }
                 }
-                outbuff[row][buffer_byte]=buffer_byte;
+                outbuff[row][buffer_byte]=buffer_byte + line;
                 
             }
             
