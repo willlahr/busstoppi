@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define COLUMN_MAX 65
-#define LINES 7
+#define ROWS 7
 #define BYTES_PER_LINE 9
 
 
@@ -21,20 +21,28 @@ int main(int argc, char **argv) {
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
     
-	uint8_t outbuff[LINES][BYTES_PER_LINE]; // one LED line long
+	uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // one LED line long
     
 	uint8_t inbuff[BYTES_PER_LINE]; // doesn't read anything - isn't even connected to anything
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
+
     uint8_t pins[] = {RPI_V2_GPIO_P1_03 , RPI_V2_GPIO_P1_05 , RPI_V2_GPIO_P1_07 ,
         RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 };
     
+    uint8_t cs_pins[] = {RPI_V2_GPIO_P1_22 , RPI_V2_GPIO_P1_24 , RPI_V2_GPIO_P1_26};
+    
     int pin =0;
-    for(pin = 0; pin<LINES; pin++) {
+    for(pin = 0; pin < sizeof(pins); pin++) {
         bcm2835_gpio_fsel(pins[pin], BCM2835_GPIO_FSEL_OUTP);
     }
     
+    for(pin = 0;  pin< sizeof(cs_pins); pin++)
+    {
+        bcm2835_gpio_fsel(cs_pins[pin], BCM2835_GPIO_FSEL_OUTP);
+    }
+        
     while(1)
     {
         for(column=0;column<COLUMN_MAX;column++)
@@ -43,21 +51,22 @@ int main(int argc, char **argv) {
             unsigned char column_byte = (column/8) ;
             unsigned char column_bit = column% 8 ;
             unsigned char buffer_byte;
-            for(buffer_byte =0; buffer_byte< BYTES_PER_LINE; buffer_byte++)
+    // this block makes up some data to display. (A horizontal bar goind from left to right)
+            for(buffer_byte =0; buffer_byte< (BYTES_PER_LINE * LINES); buffer_byte++)
             {
          //       printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
-                if(column_byte == buffer_byte)
+                if(column_byte == (buffer_byte % BYTES_PER_LINE))
                 {
-                    int line = 0;
-                    for(line=0; line<LINES; line++)
+                    int row  = 0;
+                    for(pin=0; row<ROWS; row++)
                     {
-                        outbuff[line][buffer_byte]=0x80 >> column_bit;
+                        outbuff[row][buffer_byte]=0x80 >> column_bit;
                     }
                 } else {
-                    int line = 0;
-                    for(line=0; line<LINES; line++)
+                    int row = 0;
+                    for(row=0; row<ROWS; row++)
                     {
-                    outbuff[line][buffer_byte]=0x00;
+                        outbuff[row][buffer_byte]=0x00;
                     }
                 }
                 
@@ -70,17 +79,26 @@ int main(int argc, char **argv) {
         
             for(count = 0; count < 100; count++)
             {
-                int line;
-                for(line =0; line<LINES; line++)
-                {
-                    bcm2835_spi_transfernb(outbuff[line], inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
-                    // turn line on for a bit
-                    bcm2835_gpio_set(pins[line]);
-                    // delay
-                    bcm2835_delayMicroseconds(1000);
-                    // turn line off
-                    bcm2835_gpio_clr(pins[line]);
+                    int row;
+                    for(row =0; row<ROWS; row++)
+                    {
+                        int line = 0;
+                        for(line = 0; line < 3; line++)
+                        {
+                            
+                            // pull cs low
+                            bcm2835_gpio_clr(cs_pins[line]);
+                            bcm2835_spi_transfernb(outbuff[line] + (line * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
+                            bcm2835_gpio_set(cs_pins[line]);
+                        }
+                        // turn line on for a bit
+                        bcm2835_gpio_set(pins[row]);
+                        // delay
+                        bcm2835_delayMicroseconds(300);
+                        // turn line off
+                        bcm2835_gpio_clr(pins[row]);
                     
+                    }
                 }
             }
         }
