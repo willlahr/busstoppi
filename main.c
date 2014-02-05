@@ -28,16 +28,19 @@ int main(int argc, char **argv) {
     
     while(1)
     {
-        for(count = 0; count < 100; count++)
         for(column=0;column<COLUMN_MAX;column++)
+        {
+            
+            unsigned char column_byte = (column/8) ;
+            unsigned char column_bit = column% 8 ;
+            
+            printf("Column %i %i %i\n", column, column_byte, column_bit);
+        for(count = 0; count < 100; count++)
         {
             
             int a;
             for(a =0; a<19; a++)
             {
-                unsigned char column_byte = (column/8) ;
-                unsigned char column_bit = column% 8 ;
-            
                 if(column_byte == a)
                 {
                     unsigned char byte_with_one_bit_set = 0x01 << column_bit;
@@ -49,6 +52,7 @@ int main(int argc, char **argv) {
             n++;
             
             bcm2835_spi_transfernb(mosi, miso, 19 ); // one LED line is
+        }
         }
     }
     
