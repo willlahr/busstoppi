@@ -46,17 +46,16 @@ int main(int argc, char **argv) {
                 }
                 
             }
-        }
         
-        printf("Column %i %i %i\n", column, column_byte, column_bit);
         
-        for(count = 0; count < 10; count++)
-        {
-            
-            
-            bcm2835_spi_transfernb(outbuff, inbuff, BYTES_PER_LINE ); // one LED line is
-            // delay after transaction is finished
-            bcm2835_delay(1);
+        printf("Column %i %i %i %x %x %x %x\n", column, column_byte, column_bit, outbuff[0],outbuff[1],outbuff[2],outbuff[3]);
+        
+            for(count = 0; count < 10; count++)
+            {
+                bcm2835_spi_transfernb(outbuff, inbuff, BYTES_PER_LINE ); // one LED line is
+                // delay after transaction is finished
+                bcm2835_delay(1);
+            }
         }
     }
 
