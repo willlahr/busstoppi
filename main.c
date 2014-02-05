@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
         
             for(count = 0; count < 100; count++)
             {
-                bcm2835_spi_transfernb(outbuff, inbuff, BYTES_PER_LINE ); // one LED line is
+                bcm2835_spi_transfernb(outbuff, inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
                 // delay after transaction is finished
                 bcm2835_delay(1);
             }
