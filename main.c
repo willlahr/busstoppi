@@ -39,15 +39,15 @@ int main(int argc, char **argv) {
         {
             
             int a;
-            for(a =0; a<19; a++)
+            for(a =0; a<25; a++)
             {
-                if(column_byte == a)
-                {
-                    unsigned char byte_with_one_bit_set = 0x07 << column_bit;
-                    mosi[a] = byte_with_one_bit_set;
-                } else {
-                    mosi[a] = 0;
-                }
+//                if(column_byte == (a/8))
+//                {
+//                    unsigned char byte_with_one_bit_set = 0x07 << column_bit;
+ //                   mosi[a] = byte_with_one_bit_set;
+ //               } else {
+                    mosi[a] = 0x08;
+           //     }
             }
             n++;
             
