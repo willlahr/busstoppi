@@ -2,10 +2,10 @@
 #include <bcm2835.h>
 #include <stdio.h>
 
-#define COLUMN_MAX 65
+#define COLUMN_MAX 25
 #define ROWS 7
 #define LINES 3
-#define BYTES_PER_LINE 9
+#define BYTES_PER_LINE 4
 
 
 
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[row]);
                     // delay
-                    bcm2835_delayMicroseconds(300);
+                    bcm2835_delayMicroseconds(100);
                     // turn line off
                     bcm2835_gpio_clr(pins[row]);
                     
