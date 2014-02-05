@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 	bcm2835_spi_begin();
 	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
 	bcm2835_spi_setDataMode(BCM2835_SPI_MODE0);                   // The default
-	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_32768);    // ~ 1 MHz
+	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_256);    // ~ 1 MHz
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
     
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
             unsigned char buffer_byte;
             for(buffer_byte =0; buffer_byte< BYTES_PER_LINE; buffer_byte++)
             {
-                printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
+         //       printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
                 
                 if(column_byte == buffer_byte)
                 {
@@ -51,13 +51,13 @@ int main(int argc, char **argv) {
             }
         
         
-        printf("Column %i %i %i %x %x %x %x\n", column, column_byte, column_bit, outbuff[0],outbuff[1],outbuff[2],outbuff[3]);
+       // printf("Column %i %i %i %x %x %x %x\n", column, column_byte, column_bit, outbuff[0],outbuff[1],outbuff[2],outbuff[3]);
         
             for(count = 0; count < 100; count++)
             {
                 bcm2835_spi_transfernb(outbuff, inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
                 // delay after transaction is finished
-                bcm2835_delay(1);
+              //  bcm2835_delay(1);
             }
         }
     }
