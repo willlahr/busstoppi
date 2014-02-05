@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
-   
+    
     
     while(1)
     {
@@ -42,28 +42,27 @@ int main(int argc, char **argv) {
                 {
                     outbuff[buffer_byte]==0x01;
                 } else {
-                   outbuff[buffer_byte]=0x00;
+                    outbuff[buffer_byte]=0x00;
                 }
                 
             }
-            
-            printf("Column %i %i %i\n", column, column_byte, column_bit);
-      
+        }
+        
+        printf("Column %i %i %i\n", column, column_byte, column_bit);
+        
         for(count = 0; count < 10; count++)
         {
             
-        
-            bcm2835_spi_transfernb(outbuff, inbuff, 4 ); // one LED line is
-                // delay after transaction is finished
+            
+            bcm2835_spi_transfernb(outbuff, inbuff, BYTES_PER_LINE ); // one LED line is
+            // delay after transaction is finished
             bcm2835_delay(1);
-            }
         }
     }
-    
-    
-    
-    bcm2835_spi_end();
-    bcm2835_close();
-    return 0;
+
+
+bcm2835_spi_end();
+bcm2835_close();
+return 0;
 }
 
