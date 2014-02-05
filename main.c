@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     
 	uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // one LED line long
     
-	uint8_t inbuff[BYTES_PER_LINE]; // doesn't read anything - isn't even connected to anything
+	uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
