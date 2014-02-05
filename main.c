@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
             {
                 if(column_byte == a)
                 {
-                    unsigned char byte_with_one_bit_set = 0x01 << column_bit;
+                    unsigned char byte_with_one_bit_set = 0x07 << column_bit;
                     mosi[a] = byte_with_one_bit_set;
                 } else {
                     mosi[a] = 0;
@@ -52,7 +52,9 @@ int main(int argc, char **argv) {
             n++;
             
             bcm2835_spi_transfernb(mosi, miso, 19 ); // one LED line is
-        }
+                // delay after transaction is finished
+            bcm2835_delay(1);
+            }
         }
     }
     
