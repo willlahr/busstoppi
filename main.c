@@ -62,14 +62,12 @@ int main(int argc, char **argv) {
                     for(pin=0; row<ROWS; row++)
                     {
                         outbuff[row][buffer_byte]=0x80 >> column_bit;
-                        outbuff[row][buffer_byte]=buffer_byte + row;
-                    }
+                          }
                 } else {
                     int row = 0;
                     for(row=0; row<ROWS; row++)
                     {
                         outbuff[row][buffer_byte]=0x00;
-                        outbuff[row][buffer_byte]=buffer_byte + row;
                         
                     }
                 }
