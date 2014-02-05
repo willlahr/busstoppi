@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
         RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 };
     
     int pin =0;
-    for(pin = 0; pin<ROWS; pin++) {
+    for(pin = 0; pin<LINES; pin++) {
         bcm2835_gpio_fsel(pins[pin], BCM2835_GPIO_FSEL_OUTP);
     }
     
