@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[line]);
                     // delay
-                    bcm2835_delayMicroseconds(100);
+                    bcm2835_delayMicroseconds(1000);
                     // turn line off
                     bcm2835_gpio_clr(pins[line]);
                     
