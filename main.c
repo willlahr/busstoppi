@@ -70,6 +70,7 @@ int main(int argc, char **argv) {
                         outbuff[row][buffer_byte]=0x00;
                     }
                 }
+                outbuff[row][buffer_byte]=buffer_byte;
                 
             }
             
@@ -95,7 +96,7 @@ int main(int argc, char **argv) {
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[row]);
                     // delay
-                    bcm2835_delayMicroseconds(100);
+                    bcm2835_delayMicroseconds(10);
                     // turn line off
                     bcm2835_gpio_clr(pins[row]);
                     
