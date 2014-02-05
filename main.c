@@ -38,6 +38,8 @@ int main(int argc, char **argv) {
             unsigned char buffer_byte;
             for(buffer_byte =0; buffer_byte< BYTES_PER_LINE; buffer_byte++)
             {
+                printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
+                
                 if(column_byte == buffer_byte)
                 {
                     outbuff[buffer_byte]==0x01;
