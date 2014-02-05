@@ -30,6 +30,11 @@ int main(int argc, char **argv) {
     uint8_t pins[] = {RPI_V2_GPIO_P1_03 , RPI_V2_GPIO_P1_05 , RPI_V2_GPIO_P1_07 ,
         RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 };
     
+    int pin =0;
+    for(pin = 0; pin<ROWS; pin++) {
+        bcm2835_gpio_fsel(pins[pin], BCM2835_GPIO_FSEL_OUTP);
+    }
+    
     while(1)
     {
         for(column=0;column<COLUMN_MAX;column++)
