@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
     
-	uint8_t outbuff[BYTES_PER_LINE][LINES]; // one LED line long
+	uint8_t outbuff[LINES][BYTES_PER_LINE]; // one LED line long
     
 	uint8_t inbuff[BYTES_PER_LINE]; // doesn't read anything - isn't even connected to anything
     int n=0;
@@ -51,13 +51,13 @@ int main(int argc, char **argv) {
                     int line = 0;
                     for(line=0; line<LINES; line++)
                     {
-                        outbuff[buffer_byte][line]=0x80 >> column_bit;
+                        outbuff[line][buffer_byte]=0x80 >> column_bit;
                     }
                 } else {
                     int line = 0;
                     for(line=0; line<LINES; line++)
                     {
-                    outbuff[buffer_byte][line]=0x00;
+                    outbuff[line][buffer_byte]=0x00;
                     }
                 }
                 
