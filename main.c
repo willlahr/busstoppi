@@ -2,7 +2,7 @@
 #include <bcm2835.h>
 #include <stdio.h>
 
-#define COLUMN_MAX = 25;
+#define COLUMN_MAX 25
 
 
 int main(int argc, char **argv) {
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     
     while(1)
     {
-        for(column=0;column<COLUMN_MAX;column++)
+        for(column=0;column<COLUMN_MAX;column++;)
         {
             
             int a;
