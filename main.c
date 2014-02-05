@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
-    uint8_t pins = {RPI_V2_GPIO_P1_03 , RPI_V2_GPIO_P1_05 , RPI_V2_GPIO_P1_07 ,
+    uint8_t pins[] = {RPI_V2_GPIO_P1_03 , RPI_V2_GPIO_P1_05 , RPI_V2_GPIO_P1_07 ,
         RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 };
     
     while(1)
