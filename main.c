@@ -18,9 +18,9 @@ int main(int argc, char **argv) {
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
     
-	uint8_t mosi[19]; // one LED line long
+	uint8_t mosi[4]; // one LED line long
     
-	uint8_t miso[19];
+	uint8_t miso[4];
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
         {
             
             int a;
-            for(a =0; a<25; a++)
+            for(a =0; a<4; a++)
             {
 //                if(column_byte == (a/8))
 //                {
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
             }
             n++;
             
-            bcm2835_spi_transfernb(mosi, miso, 19 ); // one LED line is
+            bcm2835_spi_transfernb(mosi, miso, 4 ); // one LED line is
                 // delay after transaction is finished
             bcm2835_delay(1);
             }
