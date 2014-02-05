@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     
 	uint8_t outbuff[BYTES_PER_LINE][LINES]; // one LED line long
     
-	uint8_t inbuff[BYTES_PER_LINE][LINES];
+	uint8_t inbuff[BYTES_PER_LINE]; // doesn't read anything - isn't even connected to anything
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
@@ -43,10 +43,17 @@ int main(int argc, char **argv) {
          //       printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
                 if(column_byte == buffer_byte)
                 {
-                    
-                    outbuff[buffer_byte]=0x80 >> column_bit;
+                    int line = 0;
+                    for(line=0; line<LINES; line++)
+                    {
+                        outbuff[buffer_byte][line]=0x80 >> column_bit;
+                    }
                 } else {
-                    outbuff[buffer_byte]=0x00;
+                    int line = 0;
+                    for(line=0; line<LINES; line++)
+                    {
+                    outbuff[buffer_byte][line]=0x00;
+                    }
                 }
                 
             }
@@ -61,7 +68,7 @@ int main(int argc, char **argv) {
                 int line;
                 for(line =0; line<LINES; line++)
                 {
-                    bcm2835_spi_transfernb(outbuff, inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
+                    bcm2835_spi_transfernb(outbuff[line], inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[line]);
                     // delay
