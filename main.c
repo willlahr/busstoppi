@@ -4,6 +4,7 @@
 
 #define COLUMN_MAX 65
 #define ROWS 7
+#define LINE 3
 #define BYTES_PER_LINE 9
 
 
