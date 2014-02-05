@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
                 if(column_byte == buffer_byte)
                 {
                     
-                    outbuff[buffer_byte]=0x01 << column_bit;
+                    outbuff[buffer_byte]=0x80 >> column_bit;
                 } else {
                     outbuff[buffer_byte]=0x00;
                 }
