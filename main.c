@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <sched.h>
 #include <sys/mman.h>
-
+#include <string.h>
 
 #define COLUMN_MAX 25
 #define ROWS 7
