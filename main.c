@@ -9,6 +9,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h> /* For mode constants */
 #include <fcntl.h> /* For O_* constants */
+  #include <stdlib.h>
 
 
 
@@ -89,35 +90,8 @@ int main(int argc, char **argv) {
         for(column=0;column<COLUMN_MAX;column++)
         {
             
-            unsigned char column_byte = (column/8) ;
-            unsigned char column_bit = column% 8 ;
-            unsigned char buffer_byte;
-            // this block makes up some data to display. (A horizontal bar goind from left to right)
-            for(buffer_byte =0; buffer_byte< (BYTES_PER_LINE * LINES); buffer_byte++)
-            {
-                //       printf("column_byte %i, buffer_byte %i, column_bit %i \n", column_byte, buffer_byte, column_bit );
-                if(column_byte == (buffer_byte % BYTES_PER_LINE))
-                {
-                    int row  = 0;
-                    for(pin=0; row<ROWS; row++)
-                    {
-  //                      outbuff[row][buffer_byte]=0x80 >> column_bit;
-                        outbuff[row][buffer_byte]=0xFF;
-                    }
-                } else {
-                    int row = 0;
-                    for(row=0; row<ROWS; row++)
-                    {
-//                        outbuff[row][buffer_byte]=0x00;
-                        outbuff[row][buffer_byte]=0xFF;
-                        
-                    }
-                }
-                
-            }
+        
             
-            
-            // printf("Column %i %i %i %x %x %x %x\n", column, column_byte, column_bit, outbuff[0],outbuff[1],outbuff[2],outbuff[3]);
             
             
             
@@ -132,7 +106,7 @@ int main(int argc, char **argv) {
                         
                         // pull cs low
                         bcm2835_gpio_clr(cs_pins[line]);
-                        bcm2835_spi_transfernb( outbuff  + (row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE * ROWS)- 1 );
+                        bcm2835_spi_transfernb( (outbuff  + ((row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE)), inbuff, (BYTES_PER_LINE * ROWS)- 1 );
                         bcm2835_gpio_set(cs_pins[line]);
                     }
                     struct sched_param sp;
