@@ -33,11 +33,10 @@ void spi_setup() {
     
 }
 
-uint8_t *shared_memory_setup(int size)
+uint8_t *shared_memory_setup(size_t size)
 {
     uint8_t *result = NULL;
-    int integerSize = sizeof(int);
-    
+ 
     /* Open the shared memory. */
     int descriptor = shm_open("ledsign", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     
