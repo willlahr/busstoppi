@@ -4,6 +4,13 @@
 #include <sched.h>
 #include <sys/mman.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h> /* For mode constants */
+#include <fcntl.h> /* For O_* constants */
+
+
 
 #define COLUMN_MAX 145
 #define ROWS 7
@@ -14,7 +21,7 @@ void spi_setup() {
     
     if (!bcm2835_init()) {
 		printf("oops, could not init bcm2835\n");
-        abort(1);
+        abort();
 	}
 	bcm2835_spi_begin();
 	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
@@ -52,9 +59,9 @@ int main(int argc, char **argv) {
     // stop system scheduler from switching tasks while line is on
     
     
-    uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
+   // uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
     
-    outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
+    uint_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     
     uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
   
@@ -125,7 +132,7 @@ int main(int argc, char **argv) {
                         
                         // pull cs low
                         bcm2835_gpio_clr(cs_pins[line]);
-                        bcm2835_spi_transfernb( outbuff  + (row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE * ROWS)- 1) ); // one LED line is
+                        bcm2835_spi_transfernb( outbuff  + (row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE * ROWS)- 1 );
                         bcm2835_gpio_set(cs_pins[line]);
                     }
                     struct sched_param sp;
