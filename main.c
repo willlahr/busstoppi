@@ -112,13 +112,11 @@ int main(int argc, char **argv) {
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[row]);
                     // delay
-                    bcm2835_delayMicroseconds(150);
+                    bcm2835_delayMicroseconds(120);
                     // turn line off
                     bcm2835_gpio_clr(pins[row]);
                    // let system scheduler swap us out if it wants to again
-                    
-                    sp.sched_priority = sched_get_priority_min(SCHED_FIFO);
-                    sched_setscheduler(0, SCHED_FIFO, &sp);
+                    sched_yield(2);
                     
                     
                 }
