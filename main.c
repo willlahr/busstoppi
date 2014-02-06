@@ -116,7 +116,6 @@ int main(int argc, char **argv) {
                     bcm2835_gpio_clr(pins[row]);
                     
                     
-                    struct sched_param sp;
                     memset(&sp, 0, sizeof(sp));
                     sp.sched_priority = sched_get_priority_min(SCHED_OTHER);
                     sched_setscheduler(0, SCHED_OTHER, &sp);
