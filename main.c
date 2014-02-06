@@ -9,7 +9,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h> /* For mode constants */
 #include <fcntl.h> /* For O_* constants */
-  #include <stdlib.h>
+#include <stdlib.h>
 
 
 
@@ -30,7 +30,7 @@ void spi_setup() {
 	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_256);    // ~ 1 MHz
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
-
+    
 }
 
 uint8_t *shared_memory_setup(int size)
@@ -59,12 +59,12 @@ int main(int argc, char **argv) {
     // stop system scheduler from switching tasks while line is on
     
     
-   // uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
+    // uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
     
     uint8_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     
     uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
-  
+    
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
@@ -86,53 +86,46 @@ int main(int argc, char **argv) {
     
     while(1)
     {
-        for(column=0;column<COLUMN_MAX;column++)
+        int row;
+        for(row =0; row<ROWS; row++)
         {
             
-        
-            
-            
-            
-            
-            for(count = 0; count < 100; count++)
+            int line = 0;
+            for(line = 0; line < 3; line++)
             {
-                int row;
-                for(row =0; row<ROWS; row++)
-                {
-                    int line = 0;
-                    for(line = 0; line < 3; line++)
-                    {
-                        
-                        // pull cs low
-                        bcm2835_gpio_clr(cs_pins[line]);
-                        bcm2835_spi_transfernb( outbuff  + (row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE) , inbuff, (BYTES_PER_LINE * ROWS)- 1 );
-                        bcm2835_gpio_set(cs_pins[line]);
-                    }
-                    struct sched_param sp;
-                    memset(&sp, 0, sizeof(sp));
-                    sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
-                    sched_setscheduler(0, SCHED_FIFO, &sp);
-                    
-                    // turn line on for a bit
-                    bcm2835_gpio_set(pins[row]);
-                    // delay
-                    bcm2835_delayMicroseconds(120);
-                    // turn line off
-                    bcm2835_gpio_clr(pins[row]);
-                    
-                    
-                    memset(&sp, 0, sizeof(sp));
-                    sp.sched_priority = sched_get_priority_min(SCHED_OTHER);
-                    sched_setscheduler(0, SCHED_OTHER, &sp);
-                    
-                }
+                int line_offset = (line * ROWS * BYTES_PER_LINE);
+                int row_offset= (row * BYTES_PER_LINE);
+                int offset = line_offset + row_offset;
+                
+                // pull cs low
+                bcm2835_gpio_clr(cs_pins[line]);
+                bcm2835_spi_transfernb( (outbuff  + offset) , inbuff, (BYTES_PER_LINE * ROWS)- 1 );
+                bcm2835_gpio_set(cs_pins[line]);
             }
+            struct sched_param sp;
+            memset(&sp, 0, sizeof(sp));
+            sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
+            sched_setscheduler(0, SCHED_FIFO, &sp);
+            
+            // turn line on for a bit
+            bcm2835_gpio_set(pins[row]);
+            // delay
+            bcm2835_delayMicroseconds(120);
+            // turn line off
+            bcm2835_gpio_clr(pins[row]);
+            
+            
+            memset(&sp, 0, sizeof(sp));
+            sp.sched_priority = sched_get_priority_min(SCHED_OTHER);
+            sched_setscheduler(0, SCHED_OTHER, &sp);
+            
         }
     }
+}
 
 
-    bcm2835_spi_end();
-    bcm2835_close();
-    return 0;
+bcm2835_spi_end();
+bcm2835_close();
+return 0;
 }
 
