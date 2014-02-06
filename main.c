@@ -21,10 +21,6 @@ int main(int argc, char **argv) {
     // stop our memory from getting paged out, this is to stop our task being scheduled out whilst doing something critical
     mlockall(MCL_CURRENT | MCL_FUTURE);
     // stop system scheduler from switching tasks while line is on
-     struct sched_param sp;
-     memset(&sp, 0, sizeof(sp));
-     sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
-     sched_setscheduler(0, SCHED_FIFO, &sp);
     
     
 	bcm2835_spi_begin();
@@ -107,8 +103,10 @@ int main(int argc, char **argv) {
                         bcm2835_spi_transfernb(outbuff[line] + (line * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
                         bcm2835_gpio_set(cs_pins[line]);
                     }
-                    // let scheduler swap us out if it wants to
-                    sched_yield();
+                    struct sched_param sp;
+                    memset(&sp, 0, sizeof(sp));
+                    sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
+                    sched_setscheduler(0, SCHED_FIFO, &sp);
                     
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[row]);
@@ -117,9 +115,11 @@ int main(int argc, char **argv) {
                     // turn line off
                     bcm2835_gpio_clr(pins[row]);
                     
-                    // let system scheduler swap us out if it wants to again
-                    sched_yield();
                     
+                    struct sched_param sp;
+                    memset(&sp, 0, sizeof(sp));
+                    sp.sched_priority = sched_get_priority_min(SCHED_OTHER);
+                    sched_setscheduler(0, SCHED_OTHER, &sp);
                     
                 }
             }
