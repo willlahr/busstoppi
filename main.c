@@ -1,6 +1,9 @@
 
 #include <bcm2835.h>
 #include <stdio.h>
+#include <sched.h>
+#include <sys/mman.h>
+
 
 #define COLUMN_MAX 25
 #define ROWS 7
@@ -14,6 +17,10 @@ int main(int argc, char **argv) {
 		printf("oops, could not init bcm2835\n");
 		return 1;
 	}
+    
+    // stop our memory from getting paged out, this is to stop our task being scheduled out whilst doing something critical
+    mlockall(MCL_CURRENT | MCL_FUTURE);
+    
     
 	bcm2835_spi_begin();
 	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
@@ -95,12 +102,24 @@ int main(int argc, char **argv) {
                         bcm2835_spi_transfernb(outbuff[line] + (line * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
                         bcm2835_gpio_set(cs_pins[line]);
                     }
+                    
+                    // stop system scheduler from switching tasks while line is on
+                    struct sched_param sp;
+                    memset(&sp, 0, sizeof(sp));
+                    sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
+                    sched_setscheduler(0, SCHED_FIFO, &sp);
+                    
                     // turn line on for a bit
                     bcm2835_gpio_set(pins[row]);
                     // delay
-                    bcm2835_delayMicroseconds(200);
+                    bcm2835_delayMicroseconds(150);
                     // turn line off
                     bcm2835_gpio_clr(pins[row]);
+                   // let system scheduler swap us out if it wants to again
+                    
+                    sp.sched_priority = sched_get_priority_min(SCHED_FIFO);
+                    sched_setscheduler(0, SCHED_FIFO, &sp);
+                    
                     
                 }
             }
