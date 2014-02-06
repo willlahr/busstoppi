@@ -61,13 +61,15 @@ int main(int argc, char **argv) {
                     int row  = 0;
                     for(pin=0; row<ROWS; row++)
                     {
-                        outbuff[row][buffer_byte]=0x80 >> column_bit;
-                          }
+  //                      outbuff[row][buffer_byte]=0x80 >> column_bit;
+                        outbuff[row][buffer_byte]=0xFF;
+                    }
                 } else {
                     int row = 0;
                     for(row=0; row<ROWS; row++)
                     {
-                        outbuff[row][buffer_byte]=0x00;
+//                        outbuff[row][buffer_byte]=0x00;
+                        outbuff[row][buffer_byte]=0xFF;
                         
                     }
                 }
