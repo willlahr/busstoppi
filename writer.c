@@ -21,14 +21,13 @@
 uint8_t *shared_memory_setup(int size)
 {
     uint8_t *result = NULL;
-    int integerSize = sizeof(int);
     
     /* Open the shared memory. */
     int descriptor = shm_open("ledsign", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     
     /* Size up the shared memory. */
-    ftruncate(descriptor, integerSize);
-    result = mmap(NULL, integerSize,
+    ftruncate(descriptor, size);
+    result = mmap(NULL, size,
                   PROT_WRITE | PROT_READ, MAP_SHARED,
                   descriptor, 0 );
     return result;
@@ -39,7 +38,7 @@ uint8_t *shared_memory_setup(int size)
 int main(int argc, char **argv) {
 	
     uint8_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
- 
+    int a;
     for(a = 0; a< ROWS * LINES * BYTES_PER_LINE; a++) {
         outbuff[a] = 0x55;
     }
