@@ -5,34 +5,59 @@
 #include <sys/mman.h>
 #include <string.h>
 
-#define COLUMN_MAX 25
+#define COLUMN_MAX 145
 #define ROWS 7
 #define LINES 3
-#define BYTES_PER_LINE 4
+#define BYTES_PER_LINE 19
 
-
-
-int main(int argc, char **argv) {
-	if (!bcm2835_init()) {
+void spi_setup() {
+    
+    if (!bcm2835_init()) {
 		printf("oops, could not init bcm2835\n");
-		return 1;
+        abort(1);
 	}
-    
-    // stop our memory from getting paged out, this is to stop our task being scheduled out whilst doing something critical
-    mlockall(MCL_CURRENT | MCL_FUTURE);
-    // stop system scheduler from switching tasks while line is on
-    
-    
 	bcm2835_spi_begin();
 	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
 	bcm2835_spi_setDataMode(BCM2835_SPI_MODE0);                   // The default
 	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_256);    // ~ 1 MHz
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                      // The default
 	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);      // the default
+
+}
+
+uint8_t *shared_memory_setup(int size)
+{
+    uint8_t *result = NULL;
+    int integerSize = sizeof(int);
     
-	uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // one LED line long
+    /* Open the shared memory. */
+    int descriptor = shm_open("ledsign",
+                              O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     
-	uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
+    /* Size up the shared memory. */
+    ftruncate(descriptor, integerSize);
+    result = mmap(NULL, integerSize,
+                  PROT_WRITE | PROT_READ, MAP_SHARED,
+                  descriptor, 0 );
+    return result;
+    
+}
+
+
+int main(int argc, char **argv) {
+	
+    spi_setup();
+    // stop our memory from getting paged out, this is to stop our task being scheduled out whilst doing something critical
+    mlockall(MCL_CURRENT | MCL_FUTURE);
+    // stop system scheduler from switching tasks while line is on
+    
+    
+    uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
+    
+    outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
+    
+    uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
+  
     int n=0;
     int column = 0; // which column to light up, 0 - 25 for single board
     int count = 0;
@@ -100,7 +125,7 @@ int main(int argc, char **argv) {
                         
                         // pull cs low
                         bcm2835_gpio_clr(cs_pins[line]);
-                        bcm2835_spi_transfernb(outbuff[line] + (line * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE - 1) ); // one LED line is
+                        bcm2835_spi_transfernb( outbuff  + (row * BYTES_PER_LINE) + (line * ROWS * BYTES_PER_LINE), inbuff, (BYTES_PER_LINE * ROWS)- 1) ); // one LED line is
                         bcm2835_gpio_set(cs_pins[line]);
                     }
                     struct sched_param sp;
@@ -126,8 +151,8 @@ int main(int argc, char **argv) {
     }
 
 
-bcm2835_spi_end();
-bcm2835_close();
-return 0;
+    bcm2835_spi_end();
+    bcm2835_close();
+    return 0;
 }
 
