@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
     
    // uint8_t outbuff[ROWS][BYTES_PER_LINE * LINES]; // block containing bytes for leds
     
-    uint_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
+    uint8_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     
     uint8_t inbuff[BYTES_PER_LINE * 3]; // doesn't read anything - isn't even connected to anything
   
