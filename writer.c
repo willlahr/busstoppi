@@ -1,5 +1,4 @@
 
-#include <bcm2835.h>
 #include <stdio.h>
 #include <sched.h>
 #include <sys/mman.h>
@@ -40,7 +39,7 @@ int main(int argc, char **argv) {
     uint8_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     int a;
     for(a = 0; a< ROWS * LINES * BYTES_PER_LINE; a++) {
-       *(outbuff+a) = 0x55;
+       *(outbuff+a) = (char)a;
     }
     
     return 0;
