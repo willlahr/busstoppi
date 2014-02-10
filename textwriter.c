@@ -26,7 +26,6 @@ void pixel_on(int x, int y, int line, unsigned char *ledmem)
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * y) + x_byte;
     *(ledmem + offset) |= bit_mask;
   //  printf("Turning on %i %i line: %i byte: %i mask: %x\n", x , y, line, x_byte, bit_mask);
-    printf(".");
     
 }
 
@@ -66,13 +65,11 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
     
     int fontoffset = (character-0x20);
     fontoffset *= 5;
-   printf("Character is '%c' - %i:  Basic offset is : %i\n",character, character, fontoffset);
  
     
     for(y_offset=0; y_offset<7; y_offset++)
     {
-         printf("\n");
-        for(x_offset=0; x_offset<5; x_offset++)
+              for(x_offset=0; x_offset<5; x_offset++)
         {
             unsigned char fontmask = 0x01 << y_offset;
             int fontbyte_offset = fontoffset + x_offset;
