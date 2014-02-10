@@ -25,8 +25,8 @@ void pixel_on(int x, int y, int line, unsigned char *ledmem)
     unsigned char bit_mask = 0x80 >> bit_number;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * y) + x_byte;
     *(ledmem + offset) |= bit_mask;
-    printf("Turning on %i %i line: %i byte: %i mask: %x\n", x , y, line, x_byte, bit_mask);
-    
+  //  printf("Turning on %i %i line: %i byte: %i mask: %x\n", x , y, line, x_byte, bit_mask);
+    printf(".");
     
 }
 
@@ -41,7 +41,8 @@ void pixel_off(int x, int y, int line, unsigned char *ledmem)
     bit_mask ^= 0xff;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * y) + x_byte;
     *(ledmem + offset) &= bit_mask;
-    printf("Turning off %i %i line: %i byte: %i mask: %x\n", x , y, line, x_byte, bit_mask);
+  //  printf("Turning off %i %i line: %i byte: %i mask: %x\n", x , y, line, x_byte, bit_mask);
+     printf(" ");
     
 }
 
@@ -67,19 +68,21 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
     
     int fontoffset = (character-0x20);
     fontoffset *= 5;
-    printf("Character is '%c' - %i:  Basic offset is : %i\n",character, character, fontoffset);
+   printf("Character is '%c' - %i:  Basic offset is : %i\n",character, character, fontoffset);
+ 
     
     for(y_offset=0; y_offset<7; y_offset++)
     {
+         printf("\n");
         for(x_offset=0; x_offset<5; x_offset++)
         {
             unsigned char fontmask = 0x80 >> y_offset;
             int fontbyte_offset = fontoffset + x_offset;
             unsigned char fontbyte = font5x7[fontbyte_offset];
 
-            printf("Reading byte %i: %x with mask %x\n",fontbyte_offset, fontbyte, fontmask);
+           // printf("Reading byte %i: %x with mask %x\n",fontbyte_offset, fontbyte, fontmask);
             
-            if( font5x7[fontbyte] & fontmask) {
+            if( (font5x7[fontbyte_offset] & fontmask) != 0x00 ) {
                 pixel_on(x+x_offset,(line * LINES)+y_offset,0,ledmem);
             } else {
                pixel_off(x+x_offset,(line * LINES)+y_offset,0,ledmem);
