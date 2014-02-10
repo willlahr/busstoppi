@@ -20,8 +20,8 @@ void pixel_on(int x, int y, int line, unsigned char *ledmem)
 {
 
     
-    int x_byte = (x % 8);
-    int bit_number = x - x_byte;
+    int x_byte = (x / 8);
+    int bit_number = x % 8;
     unsigned char bit_mask = 0x80 >> bit_number;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * line) + x_byte;
     *(ledmem + offset) |= bit_mask;
