@@ -37,7 +37,7 @@ void pixel_off(int x, int y, int line, unsigned char *ledmem)
     int x_byte = (x % 8);
     
     int bit_number = x - x_byte;
-    unsigned char bit_mask = 0x80 >> bit_number;
+    unsigned char bit_mask = 0x40 >> bit_number;
     bit_mask ^= 0xff;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * y) + x_byte;
     *(ledmem + offset) &= bit_mask;
