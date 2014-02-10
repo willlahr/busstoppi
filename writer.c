@@ -35,12 +35,32 @@ unsigned char *shared_memory_setup(int size)
 
 
 int main(int argc, char **argv) {
-	
+	// try to turn on one first 5x7 bit character at a time
+    
+    
+    
+    
     unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     int a;
-    for(a = 0; a< ROWS * LINES * BYTES_PER_LINE; a++) {
-       *(outbuff+a) = (char)a;
+    
+    for(a = 0; a< ROWS; a++) {
+        offset = (BYTES_PER_LINE * a);
+        *(outbuff+offset) = 0xF8;
+        int b;
+        for(b=0; b<5; b++)
+        {
+            offset++;
+            *(outbuff+offset) = 0x00;
+            
+        }
+        
     }
+    
+
+    
+  //  for(a = 0; a< ROWS * LINES * BYTES_PER_LINE; a++) {
+  //     *(outbuff+a) = (char)a;
+  //  }
     
     return 0;
 }
