@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
                 {
                     *(outbuff+offset+byte) = (row==on_row)?0xff:0x00;
                 }
-                           }
+            }
         
             sleep(2);
 
