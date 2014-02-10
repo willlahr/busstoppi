@@ -27,7 +27,7 @@ void pixel_on(int x, int y, int line, unsigned char *ledmem)
 }
 
 
-void pixel_off(int x, int y, unsigned char *ledmem)
+void pixel_off(int x, int y, int line, unsigned char *ledmem)
 {
     int x_byte = x % 8;
     int bit_number = x - x_byte;
@@ -53,7 +53,7 @@ unsigned char *shared_memory_setup(int size)
     
 }
 
-void write_character_at(int x,int line,char character, char *ledmem) {
+void write_character_at(int x,int line,char character, unsigned char *ledmem) {
     int x_offset;
     int y_offset;
     
@@ -67,19 +67,19 @@ void write_character_at(int x,int line,char character, char *ledmem) {
         {
             unsigned char fontmask = 0x80 >> y_offset;
             int fontbyte = fontoffset + x_offset;
-            if( font[fontbyte] && fontmask) {
-                pixel_on(x,y,ledmem);
+            if( font5x7[fontbyte] && fontmask) {
+                pixel_on(x+x_offset,(line * LINES)+y_offset,0,ledmem);
             } else {
-                pixel_off(x,y,ledmem);
+                pixel_off(x+x,(line*LINES)+y_offset,0,ledmem);
             }
         }
     }
 }
 
-void write_string(char *string, char *ledmem) {
+void write_string(char *string, unsigned char *ledmem) {
     int index = 0;
     for(index=0; index<strlen(string); index++){
-        write_character_at(5*index,0,string[index], ledmem)
+        write_character_at(5*index,0,string[index], ledmem);
     }
     
 }
