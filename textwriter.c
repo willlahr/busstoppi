@@ -18,23 +18,31 @@
 
 void pixel_on(int x, int y, int line, unsigned char *ledmem)
 {
+
+    
     int x_byte = x % 8;
     int bit_number = x - x_byte;
     unsigned char bit_mask = 0x80 >> bit_number;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * line) + x_byte;
     *(ledmem + offset) |= bit_mask;
+    printf("Turning on %i %i line: %i byte: %i mask: %x\n", x , y, x_byte, bit_mask);
+    
     
 }
 
 
 void pixel_off(int x, int y, int line, unsigned char *ledmem)
 {
+    
     int x_byte = x % 8;
+    
     int bit_number = x - x_byte;
     unsigned char bit_mask = 0x80 >> bit_number;
     bit_mask ^= 0xff;
     int offset = (line * (BYTES_PER_LINE * ROWS)) + (BYTES_PER_LINE * line) + x_byte;
     *(ledmem + offset) &= bit_mask;
+    printf("Turning off %i %i line: %i byte: %i mask: %x\n", x , y, x_byte, bit_mask);
+    
 }
 
 unsigned char *shared_memory_setup(int size)
@@ -67,10 +75,13 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
         {
             unsigned char fontmask = 0x80 >> y_offset;
             int fontbyte = fontoffset + x_offset;
+
             if( font5x7[fontbyte] && fontmask) {
                 pixel_on(x+x_offset,(line * LINES)+y_offset,0,ledmem);
             } else {
-                pixel_off(x+x,(line*LINES)+y_offset,0,ledmem);
+            //    pixel_off(x+x,(line*LINES)+y_offset,0,ledmem);
+                pixel_off(x+x_offset,(line * LINES)+y_offset,0,ledmem);
+                
             }
         }
     }
