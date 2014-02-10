@@ -99,7 +99,9 @@ int main(int argc, char **argv) {
 	// write some text to the display
     
     if(argc < 2) {
-        printf("Usage: %s <string to write>",argv[0]);
+        printf("Usage: %s <string to write>\n",argv[0]);
+        exit(1);
+        
     }
     
     
