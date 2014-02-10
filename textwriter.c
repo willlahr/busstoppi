@@ -76,7 +76,7 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
          printf("\n");
         for(x_offset=0; x_offset<5; x_offset++)
         {
-            unsigned char fontmask = 0x80 >> y_offset;
+            unsigned char fontmask = 0x01 << y_offset;
             int fontbyte_offset = fontoffset + x_offset;
             unsigned char fontbyte = font5x7[fontbyte_offset];
 
