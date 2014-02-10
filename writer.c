@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
     
     unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     int a;
-    
+    // just turn on first row
     for(a = 0; a< ROWS; a++) {
         offset = (BYTES_PER_LINE * a);
         *(outbuff+offset) = 0xF8;
