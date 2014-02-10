@@ -47,7 +47,7 @@ uint8_t *shared_memory_setup(size_t size)
     uint8_t *result = NULL;
  
     /* Open the shared memory. */
-    int descriptor = shm_open("ledsign",  O_CREAT | O_RDWR, 0777);
+    int descriptor = shm_open("ledsign",  O_CREAT | O_RDWR, S_IRWXU | S_IRWXG | S_IRWXO);
     
     /* Size up the shared memory. */
     ftruncate(descriptor, size);
