@@ -1,4 +1,3 @@
-#define NO_HARDWARE
 
 #ifndef NO_HARDWARE
 #include <bcm2835.h>
@@ -119,17 +118,20 @@ int main(int argc, char **argv) {
                 int offset = line_offset + row_offset;
 #ifdef NO_HARDWARE
                 printf("CS Low for line %i\n",line);
+                printf("SPI Send %i bytes starting at offset %i\n", (BYTES_PER_LINE)- 1 , offset );
+        
+                printf("CS High for line %i\n",line);
+                
 #else
                 // pull cs low
                 bcm2835_gpio_clr(cs_pins[line]);
-#endif
-                printf("SPI Send %i bytes starting at offset %i\n", (BYTES_PER_LINE)- 1 , offset );
                 
-//                bcm2835_spi_transfernb( (outbuff  + offset) , inbuff, (BYTES_PER_LINE * ROWS)- 1 );
+                bcm2835_spi_transfernb( (outbuff  + offset) , inbuff, (BYTES_PER_LINE * ROWS)- 1 );
 
-                printf("CS High for line %i\n",line);
- //
- //               bcm2835_gpio_set(cs_pins[line]);
+#endif
+
+ 
+                bcm2835_gpio_set(cs_pins[line]);
             }
             struct sched_param sp;
             memset(&sp, 0, sizeof(sp));
