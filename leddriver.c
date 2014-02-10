@@ -78,8 +78,7 @@ int main(int argc, char **argv) {
 #ifdef NO_HARDWARE
     {};
 #else
-    { RPI_V2_GPIO_P1_05 , RPI_V2_GPIO_P1_07 ,RPI_V2_GPIO_P1_03 ,
-        RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 };
+    {    RPI_V2_GPIO_P1_03 , RPI_V2_GPIO_P1_11, RPI_V2_GPIO_P1_13 , RPI_V2_GPIO_P1_15 , RPI_V2_GPIO_P1_16 ,RPI_V2_GPIO_P1_07 , RPI_V2_GPIO_P1_05};
 #endif
     
     uint8_t cs_pins[3] =
