@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
             // turn line off
             bcm2835_gpio_clr(pins[row]);
             memset(&sp, 0, sizeof(sp));
-            sp.sched_priority = sched_get_priority_min(SCHED_OTHER);
+            sp.sched_priority = sched_get_priority_max(SCHED_OTHER);
             sched_setscheduler(0, SCHED_OTHER, &sp);
 #endif
 
