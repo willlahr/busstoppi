@@ -17,9 +17,9 @@
 #define LINES 3
 #define BYTES_PER_LINE 19
 
-uint8_t *shared_memory_setup(int size)
+unsigned char *shared_memory_setup(int size)
 {
-    uint8_t *result = NULL;
+    unsigned char *result = NULL;
     
     /* Open the shared memory. */
     int descriptor = shm_open("ledsign", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
@@ -36,7 +36,7 @@ uint8_t *shared_memory_setup(int size)
 
 int main(int argc, char **argv) {
 	
-    uint8_t *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
+    unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
     int a;
     for(a = 0; a< ROWS * LINES * BYTES_PER_LINE; a++) {
        *(outbuff+a) = (char)a;
