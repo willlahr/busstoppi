@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
                 // pull cs low
                 bcm2835_gpio_clr(cs_pins[line]);
                 
-                bcm2835_spi_transfernb( (outbuff  + offset) , inbuff, (BYTES_PER_LINE * ROWS)- 1 );
+                bcm2835_spi_transfernb( (outbuff  + offset) , inbuff, (BYTES_PER_LINE)- 1 );
 
 #endif
 
