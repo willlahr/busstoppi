@@ -59,6 +59,19 @@ int main(int argc, char **argv) {
                 }
             }
         
+            for(line = 0; line < 3; line++)
+            {
+                for(row = 0; row < 7; row++)
+                {
+                        int offset = BYTES_PER_LINE * (row + (7*line));
+                
+                        for(byte =0; byte<BYTES_PER_LINE; byte++)
+                        {
+                            *(outbuff+offset+byte) = (row==on_row)?0xff:0x00;
+                        }
+                }
+            }
+            
             sleep(2);
 
         }
