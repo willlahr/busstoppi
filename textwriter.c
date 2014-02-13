@@ -78,9 +78,9 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
            // printf("Reading byte %i: %x with mask %x\n",fontbyte_offset, fontbyte, fontmask);
             
             if( (font5x7[fontbyte_offset] & fontmask) != 0x00 ) {
-                pixel_on(x+x_offset,(line * LINES)+y_offset,0,ledmem);
+                pixel_on(x+x_offset,y_offset,line,ledmem);
             } else {
-               pixel_off(x+x_offset,(line * LINES)+y_offset,0,ledmem);
+               pixel_off(x+x_offset,y_offset,line,ledmem);
                 
             }
         }
@@ -108,14 +108,15 @@ int main(int argc, char **argv) {
     
     
     unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
-    write_string(argv[1], 2, outbuff);
+    write_string(argv[1], 0, outbuff);
+   
     if(argc >= 3)
     {
         write_string(argv[2], 1, outbuff);
     }
     if(argc >= 4)
     {
-        write_string(argv[3], 0, outbuff);
+        write_string(argv[3], 2, outbuff);
     }
     
     
