@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
     
     
     unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
-    write_string(argv[1], 0, outbuff);
+    write_string(argv[1], 2, outbuff);
    
     if(argc >= 3)
     {
@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
     }
     if(argc >= 4)
     {
-        write_string(argv[3], 2, outbuff);
+        write_string(argv[3], 0, outbuff);
     }
     
     
