@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
     }
     if(argc >= 4)
     {
-        write_string(argv[3], 0, outbuff);
+        write_string(argv[3], 0g, outbuff);
     }
     
     
