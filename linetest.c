@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     
     while (1)
     {
-        int row, on_row, byte = 0;
+        int line, row, on_row, byte = 0;
         for(on_row = 0; on_row < 7; on_row++)
         {
             printf("Testing Row %i\n", on_row);
