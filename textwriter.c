@@ -87,10 +87,10 @@ void write_character_at(int x,int line,char character, unsigned char *ledmem) {
     }
 }
 
-void write_string(char *string, unsigned char *ledmem) {
+void write_string(char *string, int line, unsigned char *ledmem) {
     int index = 0;
     for(index=0; index<strlen(string); index++){
-        write_character_at(6*index,0,string[index], ledmem);
+        write_character_at(6*index,line,string[index], ledmem);
     }
     
 }
@@ -108,7 +108,17 @@ int main(int argc, char **argv) {
     
     
     unsigned char *outbuff = shared_memory_setup(ROWS * LINES * BYTES_PER_LINE);
-    write_string(argv[1], outbuff);
+    write_string(argv[1], 2, outbuff);
+    if(argc >= 3)
+    {
+        write_string(argv[2], 1, outbuff);
+    }
+    if(argc >= 4)
+    {
+        write_string(argv[3], 0, outbuff);
+    }
+    
+    
     
     
 
