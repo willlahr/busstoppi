@@ -27,8 +27,7 @@ while true
 
     end
     system("writetosign #{song_info[0]} #{song_info[1]} #{song_info[2]}")
-
-
+    sleep 30
   end
 
   # Clock
