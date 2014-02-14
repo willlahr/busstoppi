@@ -19,11 +19,11 @@ doc.css('.call_public').each do |row|
   expected =row.css('.time')[1].text
 
   time = "#{time}                        "[0..3]
-  dest = "#{dest}                        "[0..12]
+  dest = "#{dest}                        "[0..13]
   expected = "#{expected}                        "[0..3]
 
 
-  trains[index] =  "#{time} #{dest} #{expected}"[0..23]
+  trains[index] =  "#{time} #{dest} #{expected}"[0..24]
 
     index =index + 1
     if(index == 3)
