@@ -22,8 +22,12 @@ doc.css('.call_public').each do |row|
   dest = "#{dest}                        "[0..11]
   expected = "#{expected}                        "[0..3]
 
-  expected = "OnTime"    if(time != expected)
+  if(time == expected)
+    expected = "OnTime"
+  else
+    expected = "  #{expected}"
 
+  end
   trains[index] =  "#{time} #{dest} #{expected}    "[0..24]
 
     index =index + 1
