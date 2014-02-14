@@ -42,9 +42,13 @@ while true
 
   end
 
-  # Tweet
+  system("writetosign \"ActionRocket          \" \"                         \"  \"                         \"  \"                         \" ")
 
 
 
-  system('sleep 10')
+  # Tweet ?
+
+
+
+  system('sleep 20')
 end
