@@ -21,11 +21,12 @@ puts url
 doc = Nokogiri::HTML(open(url))
 
 
+trains = []
 
 index = 0
 doc.css('.call_public').each do |row|
 
-  trains = []
+
 
   time= row.css('.time')[0].text
   dest = row.css('.location')[1].text
