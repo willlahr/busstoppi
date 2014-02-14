@@ -58,7 +58,7 @@ while true
 
 
   sleep 20
-  system("writetosign \"       FARRINGDON        \" \"     Departures  \"  \"                         \"  \"                         \" ")
+  system("writetosign \"       FARRINGDON        \" \"       departures    \"  \"                         \"  \"                         \" ")
 
 
   system("traintimes")
