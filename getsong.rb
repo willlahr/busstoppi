@@ -13,9 +13,11 @@ atags = songcell.css('a')
 
 atags.each do |atag|
 	song_info[index] = atag.text
+	song_info[index] << "                        "
+	song_info[index] = song_info_index[0..25]
 	index = index + 1
-end
 
+end
 system("echo #{song_info[0]} #{song_info[1]} #{song_info[1]}")
 system('sleep 5')
 end
