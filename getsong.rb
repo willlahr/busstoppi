@@ -6,7 +6,7 @@ require 'open-uri'
 while true
 
   # Now playing
-  system("writetosign \"                         \" \"  NOW PLAYING          \"  \"                         \"  \"                         \" ")
+  system("writetosign \"                         \" \"       NOW PLAYING      \"  \"                         \"  \"                         \" ")
 
   doc = Nokogiri::HTML(open("http://www.last.fm/user/iamelliot"))
   if doc.css('.subjectCell.highlight').length > 0
@@ -43,7 +43,7 @@ while true
   datetext = Time.now.strftime "%a %d %b        "
   timetext = Time.now.strftime "%H:%M:%S"
 
-    system("writetosign \"#{datetext}\" \"                      \"  \"                 #{timetext}\" ")
+    system("writetosign \"#{datetext}\" \"                      \"  \"                #{timetext}\" ")
 
     sleep 0.25
   end
