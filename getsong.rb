@@ -22,7 +22,7 @@ while true
     atags.each do |atag|
       song_info[index] << atag.text
       song_info[index] << "                        "
-      song_info[index] = song_info[index][0..25]
+      song_info[index] = song_info[index][0..23]
       index = index + 1
 
     end
