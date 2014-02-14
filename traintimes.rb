@@ -16,7 +16,7 @@ doc.css('.call_public').each do |row|
 
   time= row.css('.time')[0].text
   dest = row.css('.location')[1].text
-  expected =row.css('.time')[1].text
+  expected =row.css('.realtime')[1].text
 
   time = "#{time}                        "[0..3]
   dest = "#{dest}                        "[0..11]
