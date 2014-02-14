@@ -4,28 +4,26 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 require 'nokogiri'
 require 'open-uri'
-doc = Nokogiri::HTML(open("http://traintimes.org.uk/live/hayesandharlington"))
+doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/HAY"))
 
 
 trains= []
 
 index = 0
-doc.css('tr').each do |row|
+doc.css('.call_public').each do |row|
 
-  cells = row.css('td')
 
-  if cells.length > 2
-  time= "#{cells[0].text[0..4]}"
 
-  dest_text = cells[1].text
-  dest_array= dest_text.split "\2014"
-  dest = dest_array[0]
+  time= row.css('.time')[0].text
+  dest = row.css('.location')[1].text
+  expected =row.css('.time')[1].text
 
-  dest = "#{dest}            "[0..12]
+  time = "#{time}                        "[0..3]
+  dest = "#{dest}                        "[0..12]
+  expected = "#{expected}                        "[0..3]
 
-  expected = "FUCKED"
 
-  trains[index] =  "#{time} #{dest}#{expected}"[0..24]
+  trains[index] =  "#{time} #{dest} #{expected}"[0..23]
 
     index =index + 1
     if(index == 3)
@@ -33,6 +31,4 @@ doc.css('tr').each do |row|
     end
   end
 
-
-  end
 

@@ -40,8 +40,7 @@ while true
 
     system("writetosign \"#{datetext}\" \"#{timetext}\"  \"                         \" ")
 
-    system("sleep 0.25")
-
+    sleep 0.25
   end
 
 
@@ -53,5 +52,8 @@ while true
 
 
 
-  system('sleep 20')
+  sleep 20
+  system("traintimes")
+  sleep 20
+
 end
