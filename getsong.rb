@@ -62,7 +62,7 @@ while true
   system("writetosign \"       FARRINGDON        \" \"       departures    \"  \"                         \"  \"                         \" ")
 
 
-  system("traintimes")
+  system("nice -n 19 traintimes")
   sleep 10
 
 end
