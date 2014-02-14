@@ -4,7 +4,7 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 require 'nokogiri'
 require 'open-uri'
-doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/HAY"))
+doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/KGX"))
 
 
 trains= []
