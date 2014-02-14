@@ -6,10 +6,12 @@ require 'open-uri'
 while true
 
   # Now playing
-  system("writetosign \"                         \" \"       NOW PLAYING      \"  \"                         \"  \"                         \" ")
 
   doc = Nokogiri::HTML(open("http://www.last.fm/user/iamelliot"))
   if doc.css('.subjectCell.highlight').length > 0
+    system("writetosign \"                         \" \"       NOW PLAYING      \"  \"                         \"  \"                         \" ")
+    sleep 5
+
     songcell= doc.css('.subjectCell.highlight').first
 
     song_info = ["", "", ""]
@@ -25,12 +27,7 @@ while true
 
     end
     system("writetosign #{song_info[0]} #{song_info[1]} #{song_info[2]}")
-    sleep 30
 
-  else
-    system("writetosign \"                         \" \"       NOTHING          \"  \"                         \"  \"                         \" ")
-
-    sleep 5
 
   end
 
@@ -39,12 +36,16 @@ while true
 
   system("writetosign \"                         \" \"                         \"  \"                         \"  \"                         \" ")
 
+  lasttime = ""
+
   120.times do
   datetext = Time.now.strftime "%a %d %b        "
   timetext = Time.now.strftime "%H:%M:%S"
 
+  if timetext != lasttime
     system("writetosign \"#{datetext}\" \"                      \"  \"                #{timetext}\" ")
-
+  end
+    lasttime = timetext
     sleep 0.25
   end
 
@@ -62,6 +63,6 @@ while true
 
 
   system("traintimes")
-  sleep 30
+  sleep 10
 
 end
