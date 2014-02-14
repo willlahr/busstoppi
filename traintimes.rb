@@ -4,7 +4,7 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 require 'nokogiri'
 require 'open-uri'
-doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/KGX"))
+doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/ZFD"))
 
 
 trains= []
@@ -22,7 +22,7 @@ doc.css('.call_public').each do |row|
   dest = "#{dest}                        "[0..13]
   expected = "#{expected}                        "[0..3]
 
-  if(time != expected) expected = "LATE"
+  expected = "LATE"    if(time != expected)
 
   trains[index] =  "#{time} #{dest} #{expected}"[0..24]
 
