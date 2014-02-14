@@ -4,10 +4,23 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 require 'nokogiri'
 require 'open-uri'
-doc = Nokogiri::HTML(open("http://www.realtimetrains.co.uk/search/advanced/ZFD"))
+
+year = Time.now.strftime("%Y")
+month = Time.now.strftime("%m")
+day = Time.now.strftime("%d")
 
 
-trains= []
+hours_minutes_now = Time.now.strftime("%H%M")
+
+
+
+
+url = "http://www.realtimetrains.co.uk/search/advanced/ZFD/to/SUO/#{year}/#{month}/#{day}/#{hours_minutes_now}-2359"
+puts url
+
+doc = Nokogiri::HTML(open(url))
+
+
 
 index = 0
 doc.css('.call_public').each do |row|
