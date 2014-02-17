@@ -42,7 +42,7 @@ while true
   timetext = Time.now.strftime "%H:%M:%S"
 
   if timetext != lasttime
-    system("writetosign \"#{datetext}\" \"                      \"  \"                #{timetext}\" ")
+    system("nice -n 19 writetosign \"#{datetext}\" \"                      \"  \"                #{timetext}\" ")
   end
     lasttime = timetext
     sleep 0.25
