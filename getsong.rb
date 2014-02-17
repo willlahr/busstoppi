@@ -49,7 +49,7 @@ while true
   end
 
 
-  system("writetosign \"ActionRocket          \" \"                         \"  \"                         \"  \"                         \" ")
+  system("writetosign $SIGN_1 $SIGN_2 $SIGN_3 ")
 
 
 
