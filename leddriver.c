@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
 #endif
 
         }
-        usleep(1000);
+        usleep(5000);
     }
 
 
