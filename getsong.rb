@@ -7,7 +7,7 @@ while true
 
   # Now playing
 
-  doc = Nokogiri::HTML(open("http://www.last.fm/user/iamelliot"))
+  doc = Nokogiri::HTML(open("http://www.last.fm/user/actionrocket"))
   if doc.css('.subjectCell.highlight').length > 0
     system("writetosign \"                         \" \"       NOW PLAYING      \"  \"                         \"  \"                         \" ")
     sleep 5
