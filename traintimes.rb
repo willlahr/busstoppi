@@ -10,10 +10,7 @@ month = Time.now.strftime("%m")
 day = Time.now.strftime("%d")
 
 
-hours_minutes_now = Time.now.strftime("%H%M")
-
-
-
+hours_minutes_now = (Time.now + 600).strftime("%H%M")
 
 url = "http://www.realtimetrains.co.uk/search/advanced/ZFD/to/SUO/#{year}/#{month}/#{day}/#{hours_minutes_now}-2359"
 puts url
