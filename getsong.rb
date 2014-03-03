@@ -5,6 +5,7 @@ require 'open-uri'
 
 while true
 
+  begin
   # Now playing
 
   doc = Nokogiri::HTML(open("http://www.last.fm/user/actionrocket"))
@@ -68,5 +69,8 @@ while true
 
   system("nice -n 19 traintimes")
   sleep 10
+  rescue
+
+    end
 
 end
