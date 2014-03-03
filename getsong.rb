@@ -26,7 +26,7 @@ while true
       index = index + 1
 
     end
-    system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
+    system("writetosign \"#{song_info[0].upcase}\" \"#{song_info[1].upcase}\" \"#{song_info[2].upcase}\"")
     sleep 30
   end
 
@@ -48,17 +48,22 @@ while true
     sleep 0.25
   end
 
+  # Taxi status
+  doc = Nokogiri::HTML(open("http://ef.emailcms.net/status"))
+  song_info[0]= "TAXI SERVERS          #{doc.css('.servers_running').text}            "[0..23]
+  song_info[1]= "QUEUE ITEMS           #{doc.css('.queue_items').text}            "[0..23]
+  song_info[2]= "QUEUE PROCESSORS     #{doc.css('.queue_processors_running').text}            "[0..23]
 
-  system("writetosign $SIGN_1 $SIGN_2 $SIGN_3 ")
+
+
+  system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
+
 
 
 
   # Tweet ?
 
-
-
   sleep 20
-  system("writetosign \"       FARRINGDON        \" \"       departures    \"  \"                         \"  \"                         \" ")
 
 
   system("nice -n 19 traintimes")
