@@ -16,7 +16,7 @@ hours_minutes_now = (Time.now + 600).strftime("%H%M")
 
 hours_now = Integer((Time.now).strftime("%H"))
 
-return if(hours_now < 14)
+if(hours_now >14)
 
 url = "http://www.realtimetrains.co.uk/search/advanced/ZFD/to/SUO/#{year}/#{month}/#{day}/#{hours_minutes_now}-2359"
 puts url
@@ -53,5 +53,6 @@ doc.css('.call_public').each do |row|
       system("writetosign \"#{trains[0]}\" \"#{trains[1]}\" \"#{trains[2]}\"  ")
     end
   end
+end
 
 
