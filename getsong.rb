@@ -18,7 +18,7 @@ while true
     song_info = ["", "", ""]
     index = 0
     atags = songcell.css('a')
-
+    
 
     atags.each do |atag|
       song_info[index] << atag.text
@@ -28,7 +28,7 @@ while true
 
     end
     system("writetosign \"#{song_info[0].upcase}\" \"#{song_info[1].upcase}\" \"#{song_info[2].upcase}\"")
-    sleep 30
+    sleep 15
   end
 
   # Clock
@@ -38,7 +38,7 @@ while true
 
   lasttime = ""
 
-  120.times do
+  60.times do
   datetext = Time.now.strftime "%a %d %b        "
   timetext = Time.now.strftime "%H:%M:%S"
 
@@ -64,7 +64,7 @@ while true
 
   # Tweet ?
 
-  sleep 20
+  sleep 15
 
 
   system("nice -n 19 traintimes")
