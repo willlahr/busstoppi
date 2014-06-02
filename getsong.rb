@@ -59,12 +59,16 @@ while true
 
   system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
 
+  doc = Nokogiri::HTML(open("http://ef.emailcms.net/status"))
+  song_info[0]= "USERS         #{doc.css('.content-items').text}            "[0..23]
+  song_info[1]= "VERSIONS      #{doc.css('.versions').text}            "[0..23]
+  song_info[2]= "CONTENT ITEMS #{doc.css('.content-items').text}            "[0..23]
 
 
 
   # Tweet ?
 
-  sleep 15
+  sleep 10
 
 
   system("nice -n 19 traintimes")
