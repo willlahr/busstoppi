@@ -64,6 +64,7 @@ while true
   song_info[1]= "VERSIONS      #{doc.css('.versions').text}            "[0..23]
   song_info[2]= "CONTENT ITEMS #{doc.css('.content-items').text}            "[0..23]
 
+  system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
 
 
   # Tweet ?
