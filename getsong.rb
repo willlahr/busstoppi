@@ -60,9 +60,9 @@ while true
   system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
 
   doc = Nokogiri::HTML(open("http://ef.emailcms.net/status"))
-  song_info[0]= "USERS         #{doc.css('.content-items').text.rjust(8)}            "[0..23]
-  song_info[1]= "VERSIONS      #{doc.css('.versions').text.rjust(8)}            "[0..23]
-  song_info[2]= "CONTENT ITEMS #{doc.css('.content-items').text.rjust(8)}            "[0..23]
+  song_info[0]= "REGISTERED USERS #{doc.css('.users').text.rjust(8)}            "[0..23]
+  song_info[1]= "VERSIONS         #{doc.css('.versions').text.rjust(8)}            "[0..23]
+  song_info[2]= "CONTENT ITEMS    #{doc.css('.content-items').text.rjust(8)}            "[0..23]
 
   system("writetosign \"#{song_info[0]}\" \"#{song_info[1]}\" \"#{song_info[2]}\"")
 
